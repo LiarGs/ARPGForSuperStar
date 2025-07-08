@@ -3,19 +3,37 @@
 */
 
 using GameCore.Code.BaseClass;
+using UnityEngine;
 
 namespace GameCore.Code.Player
 {
-    public class PlayerBrain : BrainBase
+    public class PlayerBrain : ActorBrainBase
     {
-        void Start()
+        protected override void Awake()
         {
-
+            base.Awake();
+            ActorController = GetComponent<PlayerController>();
+            ActorCamera = PlayerCamera.Instacne;
         }
 
-        void Update()
+        protected override void OnEnable()
         {
+            base.OnEnable();
+        }
 
+        protected override void Start()
+        {
+            base.Start();
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+            // TODO 待引入虚拟摄像机后重构
+            if (!ActorCamera)
+            {
+                ActorCamera = PlayerCamera.Instacne;
+            }
         }
     }
 }
