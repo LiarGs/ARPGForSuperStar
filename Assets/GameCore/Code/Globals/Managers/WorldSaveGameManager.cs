@@ -3,33 +3,29 @@
 */
 
 using System.Collections;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace GameCore.Code.Globals.Managers
 {
-    public class WorldSaveGameManager : MonoBehaviour
+    public class WorldSaveGameManager
     {
-        public static WorldSaveGameManager Instance;
+        private static WorldSaveGameManager _Instance;
 
-        [SerializeField] public int WorldSceneIndex = 1;
+        private WorldSaveGameManager()
+        {
+        }
 
-        public IEnumerator LoadNewGame()
+        public static WorldSaveGameManager Instance
+        {
+            get { return _Instance ??= new WorldSaveGameManager(); }
+        }
+
+        public static IEnumerator LoadNewGame()
         {
             var loadOperation = SceneManager.LoadSceneAsync(WorldSceneIndex);
-            yield return null;
+            yield return loadOperation;
         }
-
-        private void Awake()
-        {
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-        }
+        
+        private const int WorldSceneIndex = 1;
     }
 }

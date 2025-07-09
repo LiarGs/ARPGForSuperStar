@@ -6,10 +6,11 @@ using GameCore.Code.BaseClass;
 
 namespace GameCore.Ability
 {
-    public class AbilityFactor
+    public static class AbilityFactor
     {
-        public AbilityBase Create(AbilityConfigBase config)
+        public static AbilityBase Create(AbilityConfigBase config)
         {
+            
             return null;
         }
     }

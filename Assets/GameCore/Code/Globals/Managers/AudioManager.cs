@@ -3,34 +3,30 @@
 */
 
 using GameCore.Code.Log;
-using UnityEngine;
 
 namespace GameCore.Code.Globals.Managers
 {
-    public class AudioManager : MonoBehaviour
+    public class AudioManager
     {
-        public static AudioManager Instance;
+        private static AudioManager _Instance;
 
-        public void Init()
+        private AudioManager()
         {
-            SuperDebug.Log("AudioManager Init");
         }
 
-        private void Awake()
+        public static AudioManager Instance
         {
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
+            get { return _Instance ??= new AudioManager(); }
+        }
+        
+        public void OnEnable()
+        {
+            SuperDebug.Log("AudioManager Enable");
         }
 
-        private void Start()
+        public void OnDisable()
         {
-            DontDestroyOnLoad(gameObject);
+            SuperDebug.Log("AudioManager Disable");
         }
     }
 }

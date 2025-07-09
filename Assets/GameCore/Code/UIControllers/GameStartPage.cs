@@ -23,7 +23,7 @@ namespace GameCore.Code.UIControllers
 
         private void _StartGame()
         {
-            StartCoroutine(WorldSaveGameManager.Instance.LoadNewGame());
+            StartCoroutine(WorldSaveGameManager.LoadNewGame());
             SuperDebug.Log("Game Started");
             GlobalVars.GUIManager.ClearAll();
         }

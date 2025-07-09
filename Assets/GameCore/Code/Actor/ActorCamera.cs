@@ -3,13 +3,11 @@
 */
 
 using GameCore.Code.BaseClass;
+
 namespace GameCore.Code.Actor
 {
     public class ActorCamera : VirtualCamera
     {
-        private void Awake()
-        {
 
-        }
     }
 }

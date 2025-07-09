@@ -3,28 +3,35 @@
 */
 
 using GameCore.Code.BaseClass;
+using GameCore.Code.Log;
 
 namespace GameCore.Code.Player
 {
     public class PlayerCamera : VirtualCamera
     {
-        public static PlayerCamera Instacne;
+        public static PlayerCamera Instance;
 
-        private void Awake()
+        protected override void Awake()
         {
-            if (Instacne == null)
+            base.Awake();
+            //这样写单例确保进入新场景时被新场景的 PlayerCamera 接管
+            if (Instance != null)
             {
-                Instacne = this;
+                Destroy(Instance.gameObject);
             }
-            else
-            {
-                Destroy(gameObject);
-            }
+
+            Instance = this;
         }
 
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
             DontDestroyOnLoad(gameObject);
+        }
+
+        public void OnEnable()
+        {
+            SuperDebug.Log("PlayerCamera Enable");
         }
     }
 }

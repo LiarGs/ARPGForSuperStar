@@ -2,16 +2,16 @@
    2025/7/4
 */
 
-using System;
 using UnityEngine;
 
 namespace GameCore.Code.BaseClass
 {
     public abstract class ActorBrainBase : MonoBehaviour
     {
+        #region UnityBehavior
+
         protected virtual void Awake()
         {
-            ActorCharacterController = GetComponent<CharacterController>();
         }
 
         protected virtual void OnEnable()
@@ -25,11 +25,11 @@ namespace GameCore.Code.BaseClass
         protected virtual void Update()
         {
         }
-        
-        // 这些组件由具体的Brain在Awake中去获取
-        public CharacterController ActorCharacterController;
-        public ControllerBase ActorController;
-        [NonSerialized]
-        public VirtualCamera ActorCamera;
+
+        protected virtual void LateUpdate()
+        {
+        }
+
+        #endregion UnityBehavior
     }
 }

@@ -11,12 +11,6 @@ namespace GameCore.Code.Globals.Managers
 {
     public class UIManager : MonoBehaviour
     {
-        public void Init()
-        {
-            SuperDebug.Log("UIManager Init");
-            LoadPage("Prefabs/UI/GameStartPage");
-        }
-
         public void LoadPage(string prefabPath)
         {
             var go = Resources.Load<GameObject>(prefabPath);
@@ -24,7 +18,7 @@ namespace GameCore.Code.Globals.Managers
             if (go != null)
             {
                 var instance = Instantiate(go, transform.position, Quaternion.identity);
-                instance.transform.SetParent(_Page.transform);
+                instance.transform.SetParent(Page.transform);
             }
             else
             {
@@ -45,27 +39,27 @@ namespace GameCore.Code.Globals.Managers
 
         public void ClearBelowPage()
         {
-            _ClearChild(_BelowPage);
+            _ClearChild(BelowPage);
         }
         
         public void ClearPage()
         {
-           _ClearChild(_Page);
+           _ClearChild(Page);
         }
 
         public void ClearAbovePage()
         {
-            _ClearChild(_AbovePage);
+            _ClearChild(AbovePage);
         }
 
         public void ClearDialog()
         {
-            _ClearChild(_Dialog);
+            _ClearChild(Dialog);
         }
 
         public void ClearAboveDialog()
         {
-            _ClearChild(_AboveDialog);
+            _ClearChild(AboveDialog);
         }
 
         private void _ClearChild(GameObject go)
@@ -80,6 +74,8 @@ namespace GameCore.Code.Globals.Managers
             }
         }
 
+        #region UnityBehavior
+
         private void Awake()
         {
             if (Instance == null)
@@ -92,23 +88,50 @@ namespace GameCore.Code.Globals.Managers
             }
         }
 
+        public void OnEnable()
+        {
+            SuperDebug.Log("UIManager Enable");
+        }
+
         private void Start()
         {
             DontDestroyOnLoad(gameObject);
-            _BelowPage = transform.Find("BelowPage").gameObject;
-            _Page = transform.Find("Page").gameObject;
-            _AbovePage = transform.Find("AbovePage").gameObject;
-            _Dialog = transform.Find("Dialog").gameObject;
-            _AboveDialog = transform.Find("AboveDialog").gameObject;
+            if (BelowPage == null)
+            {
+                BelowPage = transform.Find("BelowPage").gameObject;
+            }
+
+            if (Page == null)
+            {
+                Page = transform.Find("BelowPage").gameObject;
+            }
+
+            if (AbovePage == null)
+            {
+                AbovePage = transform.Find("AbovePage").gameObject;
+            }
+
+            if (Dialog == null)
+            {
+                Dialog = transform.Find("Dialog").gameObject;
+            }
+
+            if (AboveDialog == null)
+            {
+                AboveDialog = transform.Find("AboveDialog").gameObject;
+            }
         }
+
+        #endregion UnityBehavior
+  
 
         public static UIManager Instance;
 
         private List<UIControllerBase> _UIControllers = new List<UIControllerBase>();
-        private GameObject _BelowPage;
-        private GameObject _Page;
-        private GameObject _AbovePage;
-        private GameObject _Dialog;
-        private GameObject _AboveDialog;
+        public GameObject BelowPage;
+        public GameObject Page;
+        public GameObject AbovePage;
+        public GameObject Dialog;
+        public GameObject AboveDialog;
     }
 }

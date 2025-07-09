@@ -990,7 +990,7 @@ GameObject:
   - component: {fileID: 4540229000190281644}
   - component: {fileID: 5554655240399454553}
   - component: {fileID: 5141067584699082279}
-  - component: {fileID: 7404570992438184940}
+  - component: {fileID: 5321123365289740874}
   m_Layer: 3
   m_Name: UselessPeople
   m_TagString: Untagged
@@ -1028,8 +1028,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccfcdf2934c355441bcc3ccf7449eb45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ActorCharacterController: {fileID: 5554655240399454553}
-  ActorController: {fileID: 7404570992438184940}
 --- !u!95 &4540229000190281644
 Animator:
   serializedVersion: 5
@@ -1089,9 +1087,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c6a6fe448c14814b7821f55dc0e52fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerCharacterController: {fileID: 5554655240399454553}
   WalkingSpeed: 2
   RunningSpeed: 5
---- !u!114 &7404570992438184940
+  RotationSpeed: 15
+--- !u!114 &5321123365289740874
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1100,9 +1100,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1782702501690864755}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b882c6f60dba4fa88787d3578544107a, type: 3}
+  m_Script: {fileID: 11500000, guid: c8f23fd49830434f91062158c0be845a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Abilities: []
 --- !u!1 &1789272960074739661
 GameObject:
   m_ObjectHideFlags: 0

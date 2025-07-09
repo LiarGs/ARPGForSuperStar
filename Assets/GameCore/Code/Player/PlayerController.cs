@@ -1,32 +1,48 @@
-/* 玩家角色控制器 接收并处理玩家输入 By ashenguo
+/* 玩家角色控制器 接收并处理玩家输入 如移动，释放技能等 By ashenguo
    2025/7/8
 */
 
-using GameCore.Code.BaseClass;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace GameCore.Code.Player
 {
-    public class PlayerController : ControllerBase
+    public class PlayerController
     {
-        #region UnityBehavior
+        private static PlayerController _Instance;
 
-        protected override void OnEnable()
+        private PlayerController()
         {
-            base.OnEnable();
-            InputController.GamePlay.Move.performed += i => _InputDirection = i.ReadValue<Vector2>();
         }
 
-        private void Update()
+        public static PlayerController Instance
+        {
+            get { return _Instance ??= new PlayerController(); }
+        }
+
+        public void OnEnable()
+        {
+            _InputController ??= new InputControl();
+            _InputController.Enable();
+            _InputController.GamePlay.Move.performed += i => _MovementInput = i.ReadValue<Vector2>();
+            _InputController.GamePlay.Look.performed += i => _CameraInput = i.ReadValue<Vector2>();
+        }
+
+        public void Update()
         {
             _HandleMovementInput();
+            _HandleCameraInput();
         }
-        #endregion UnityBehavior
+
+        public void OnDisable()
+        {
+            _InputController.Disable();
+        }
         
         private void _HandleMovementInput()
         {
-            VerticalInput = _InputDirection.y;
-            HorizontalInput = _InputDirection.x;
+            VerticalInput = _MovementInput.y;
+            HorizontalInput = _MovementInput.x;
             MoveAmount = Mathf.Clamp01(Mathf.Abs(VerticalInput) + Mathf.Abs(HorizontalInput));
             switch (MoveAmount)
             {
@@ -38,7 +54,29 @@ namespace GameCore.Code.Player
                     break;
             }
         }
-        
-        private Vector2 _InputDirection; 
+
+        private void _HandleCameraInput()
+        {
+            CameraVerticalInput = _CameraInput.y;
+            CameraHorizontalInput = _CameraInput.x;
+        }
+
+        #region Field
+
+        // 玩家控制器对外暴露属性
+        public InputDevice ControllerDevice => _InputController.GamePlay.Move.activeControl.device;
+        public float VerticalInput;
+        public float HorizontalInput;
+        public float MoveAmount;
+
+        public float CameraVerticalInput;
+        public float CameraHorizontalInput;
+
+        private Vector2 _MovementInput;
+        private Vector2 _CameraInput;
+        private InputControl _InputController;
+
+        #endregion Field
+
     }
 }

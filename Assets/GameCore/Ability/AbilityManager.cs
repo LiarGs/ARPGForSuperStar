@@ -2,57 +2,40 @@
    2025/7/8
 */
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using GameCore.Code.BaseClass;
 using UnityEngine;
-
 namespace GameCore.Ability
 {
     public class AbilityManager : MonoBehaviour
-    {
-        private void Awake()
+    { 
+        #region UnityBehavior
+
+        #endregion UnityBehavior
+        
+        public void Execute(int abilityNumber, GameObject target)
         {
-            foreach (var ability in GetComponents<AbilityBase>())
+            var ability = Abilities[abilityNumber];
+            if (!ability.IsActive) return;
+            foreach (var abilityEffect in ability.Effects)
             {
-                Abilities.Add(ability);
+                abilityEffect.Execute(gameObject, target);
             }
         }
 
-        public void ActiveAbility(AbilityBase ability)
+        public void ActiveAbility(int abilityNumber)
         {
-            if (Abilities.Contains(ability))
-            {
-                ability.OnActive();
-            }
+            var ability = Abilities[abilityNumber];
+            ability.IsActive = true;
         }
 
-        public void DeActiveAbility(AbilityBase ability)
+        public void DeActiveAbility(int abilityNumber)
         {
-            if (Abilities.Contains(ability))
-            {
-                ability.OnDeActive();
-            }
+            var ability = Abilities[abilityNumber];
+            ability.IsActive = false;
         }
         
-        public void ActiveAllAbilities()
-        {
-            foreach (var ability in Abilities)
-            {
-                ability.OnActive();
-            }
-        }
-
-        public void DeActiveAllAbilities()
-        {
-            foreach (var ability in Abilities)
-            {
-                ability.OnDeActive();
-            }
-        }
-
-        [NonSerialized]
-        public List<AbilityBase> Abilities;
+        [SerializeField]
+        public List<AbilityConfigBase> Abilities;
     }
 }

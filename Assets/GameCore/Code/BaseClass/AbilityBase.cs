@@ -2,13 +2,26 @@
    2025/7/4
 */
 
+using System;
+using System.Collections.Generic;
+
 namespace GameCore.Code.BaseClass
 {
+    [Serializable]
     public abstract class AbilityBase
     {
-        public abstract void OnActive();
-        public abstract void OnDeActive();
-        
-        public bool IsActive { get; protected set; }
+        public virtual void OnActive()
+        {
+        }
+
+        public virtual void OnDeActive()
+        {
+        }
+
+        public virtual void Execute()
+        {
+        }
+
+        public List<AbilityEffectBase> Effects;
     }
 }
