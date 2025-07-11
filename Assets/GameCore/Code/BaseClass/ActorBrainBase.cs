@@ -1,7 +1,8 @@
-/* Character 大脑基类 By ashenguo
+/* Actor 大脑基类 By ashenguo
    2025/7/4
 */
 
+using GameCore.Code.Log;
 using UnityEngine;
 
 namespace GameCore.Code.BaseClass
@@ -12,24 +13,27 @@ namespace GameCore.Code.BaseClass
 
         protected virtual void Awake()
         {
-        }
+            ActorCharacterController ??= GetComponent<CharacterController>();
 
-        protected virtual void OnEnable()
-        {
-        }
-
-        protected virtual void Start()
-        {
-        }
-
-        protected virtual void Update()
-        {
-        }
-
-        protected virtual void LateUpdate()
-        {
+            ActorAnimator ??= GetComponent<Animator>();
+            
+            Controller ??= GetComponent<ActorControllerBase>();
+            
+            if (Controller == null)
+            {
+                SuperDebug.LogError($"Actor {name} is missing a Controller component");
+            }
         }
 
         #endregion UnityBehavior
+        
+        #region Field
+        
+        [Tooltip("决定是受玩家控制还是AI控制")]
+        public ActorControllerBase Controller;
+        [HideInInspector] public CharacterController ActorCharacterController;
+        [HideInInspector] public Animator ActorAnimator;
+        
+        #endregion Field
     }
 }

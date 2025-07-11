@@ -15,29 +15,23 @@ namespace GameCore.Code.Globals
         {
             GSoundManager.OnEnable();
             GAudioManager.OnEnable();
-            GPlayerController.OnEnable();
-        }
-
-        public static void Update()
-        {
-            GPlayerController.Update();
         }
 
         public static void OnDisable()
         {
             GSoundManager.OnDisable();
             GAudioManager.OnDisable();
-            GPlayerController.OnDisable();
         }
         #endregion UnityBehavoir
-
+        
+        public static MainPlayer GPlayer => MainPlayer.Instance;
+        public static PlayerCamera GPlayerCamera => PlayerCamera.Instance;
+        public static PlayerController GPlayerController => PlayerController.Instance;
         public static WorldSaveGameManager GWorldSaveGameManager => WorldSaveGameManager.Instance;
         public static GameStateManager GGameStateManager => GameStateManager.Instance;
         public static UIManager GUIManager => UIManager.Instance;
         public static SoundManager GSoundManager => SoundManager.Instance;
         public static AudioManager GAudioManager => AudioManager.Instance;
-        public static PlayerCamera GPlayerCamera => PlayerCamera.Instance;
-        public static PlayerController GPlayerController => PlayerController.Instance;
-        public static EventSystem GEventManager => EventSystem.Instance;
+        public static EventManager GEventManager => EventManager.Instance;
     }
 }

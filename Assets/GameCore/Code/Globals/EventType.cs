@@ -6,6 +6,7 @@ namespace GameCore.Code.Globals
 {
     public enum EventType
     {
-        
+        MainPlayerChange,
+        InputDeviceChange
     }
 }

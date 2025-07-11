@@ -2,7 +2,7 @@
    2025/7/8
 */
 
-using GameCore.Code.BaseClass;
+using GameCore.Code.Globals;
 
 namespace GameCore.Code.Actor
 {

@@ -37,20 +37,14 @@ namespace GameCore
             }
         }
 
-        private void Update()
-        {
-            GlobalVars.Update();
-        }
-
         private void OnDisable()
         {
             GlobalVars.OnDisable();
         }
 
         #endregion UnityBehavior
-
+        
         public GameScene CurrentGameScene;
-
     }
 
     public enum GameScene

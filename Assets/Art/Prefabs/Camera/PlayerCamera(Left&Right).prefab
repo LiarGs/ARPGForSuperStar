@@ -47,12 +47,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Follow: {fileID: 0}
   CameraPivotTransform: {fileID: 5113579224906983579}
-  LookAt: {fileID: 0}
   CameraSmoothSpeed: 1
-  LeftAndRightRotationSpeed: 220
-  UpAndDownRotationSpeed: 220
+  MouseLeftAndRightRotationSpeed: 20
+  MouseUpAndDownRotationSpeed: 20
+  GamepadLeftAndRightRotationSpeed: 220
+  GamepadUpAndDownRotationSpeed: 220
   MinimumPivot: -30
   MaximumPivot: 60
+  CollideWithLayers:
+    serializedVersion: 2
+    m_Bits: 192
+  CameraCollisionRadius: 0.2
 --- !u!1 &6296023676190705439
 GameObject:
   m_ObjectHideFlags: 0

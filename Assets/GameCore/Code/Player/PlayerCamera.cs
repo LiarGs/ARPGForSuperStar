@@ -2,14 +2,19 @@
    2025/7/8
 */
 
-using GameCore.Code.BaseClass;
+using GameCore.Code.Globals;
 using GameCore.Code.Log;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using EventType = GameCore.Code.Globals.EventType;
 
 namespace GameCore.Code.Player
 {
     public class PlayerCamera : VirtualCamera
     {
         public static PlayerCamera Instance;
+
+        #region UnityBehavior
 
         protected override void Awake()
         {
@@ -23,15 +28,50 @@ namespace GameCore.Code.Player
             Instance = this;
         }
 
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            GlobalVars.GEventManager.AddEventListener<InputDevice>(EventType.InputDeviceChange,
+                _OnDeviceChanged);
+            GlobalVars.GEventManager.AddEventListener<GameObject>(EventType.MainPlayerChange,
+                player => Follow = player.transform);
+            SuperDebug.Log("PlayerCamera Enable");
+        }
+        
         protected override void Start()
         {
             base.Start();
             DontDestroyOnLoad(gameObject);
         }
 
-        public void OnEnable()
+        protected override void OnDisable()
         {
-            SuperDebug.Log("PlayerCamera Enable");
+            base.OnDisable();
+            GlobalVars.GEventManager.RemoveEventListener<InputDevice>(EventType.InputDeviceChange,
+                _OnDeviceChanged);
+            SuperDebug.Log("PlayerCamera Disable");
+        }
+
+        #endregion UnityBehavior
+
+        private void _OnDeviceChanged(InputDevice inputDevice)
+        {
+            switch (inputDevice)
+            {
+                case Gamepad:
+                    // SuperDebug.Log("Gamepad Control");
+                    LeftAndRightRotationSpeed = GamepadLeftAndRightRotationSpeed;
+                    UpAndDownRotationSpeed = GamepadUpAndDownRotationSpeed;
+                    break;
+                case Mouse:
+                    // SuperDebug.Log("Mouse Control");
+                    LeftAndRightRotationSpeed = MouseLeftAndRightRotationSpeed;
+                    UpAndDownRotationSpeed = MouseUpAndDownRotationSpeed;
+                    break;
+                case Keyboard:
+                    // SuperDebug.Log("Keyboard Control");
+                    break;
+            }
         }
     }
 }
